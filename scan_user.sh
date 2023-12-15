@@ -36,13 +36,13 @@ printf "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Verificando username\e[0m\e[1;77m 
 
 ## TIKTOK
 
-check_tictoc=$(curl -s "https://www.tiktok.com/@$username" -L -H "Accept-Language: en" | grep -o '"id":"'; echo $?)
-printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] TicToc: \e[0m"
+check_tiktok=$(curl -s "https://www.tiktok.com/@$username" -L -H "Accept-Language: en" | grep -o '"id":"'; echo $?)
+printf "\e[1;77m[\e[0m\e[1;92m+\e[0m\e[1;77m] TikTok: \e[0m"
 
-if [[ $check_tictoc == *'0'* ]]; then
+if [[ $check_tiktok == *'0'* ]]; then
 printf "\e[1;92m Found!\e[0m https://www.tiktok.com/@%s\n" $username
 printf "https://www.tiktok.com/@%s\n" $username > $projeto/output.txt
-elif [[ $check_tictoc == *'1'* ]]; then
+elif [[ $check_tiktok == *'1'* ]]; then
 printf "\e[1;93mNot Found!\e[0m\n"
 fi
 
