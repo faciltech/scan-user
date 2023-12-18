@@ -3,10 +3,11 @@
 </p>
 
 <h1 align="center">
-  Scan-User - Ferramenta para enumeraçao de usuario.
+  Scan-User - Ferramenta para enumeraçao de usuário.
 </h1>
 Meu principal objetivo é criar uma ferramenta no idioma português brasileiro, que atenda a comunidade nacional, claro que o resultado pode ser interepretado por qualquer usuário seja de qual país esteja fazendo uso. Mas todo esforço é para que nossa comunidade cresça, e que outros profissionais venham desenvolver produções nacionais.
 A ideia alvo desse script simples é verificar a partir de um email e um nick name, contas de usuários nas redes sociais e outros sites, além de tentar verificar fotos.
+
 ## 🚀 Por que usa-lo?
 
 Muitas vezes precisamos verificar de forma rápida se um determinado usuário possui outras contas válidas, ou mesmo confirmar se existe, além disso para quem trabalha com OSINT ajuda na relação de vinculos entre redes..
