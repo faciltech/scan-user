@@ -34,15 +34,34 @@ chmod +x scan_user.sh
 OBS: Uma outra boa dica é mover o arquivo do script para o diretório /usr/bin , dessa forma podemos utilizar de forma direta no terminal.
 ## 🧐 Como usar o script?
 Você irá digitar ```./scan_user.sh ``` 
-Ele vai perguntar o nome do projeto:
-Ele vai perguntar o nome do email:
-Ele vai perguntar o nome do usuário:
-Em seguida o script faz o scan em sites e redes sociais e cria uma arquivo dentro da pasta do projeto com todas encontradas;
-![image](https://github.com/faciltech/scan-user/assets/3409713/323f8021-2f5e-4324-aef3-5507853a9810)
+<p>❓<b>Ele vai perguntar o nome do projeto:</b> Voce nao pode deixar em branco</br>
+<b>❓Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas nao terá o retorno de imagem do gravatar.com</br>
+<b>❓Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas nao terá o retorno de links do site escavador.com</br>
+<b>❓Ele vai perguntar o nome do usuário:</b> Voce nao pode deixar em branco.</br>
 
-Ao final ele verifica se existe alguma foto desse usuário no site gravatar, se existir, ele baixa para a pasta do projeto essa foto e em seguida mostra na tela também.
+Em seguida o script faz o scan em sites e redes sociais e cria uma arquivo dentro da pasta do projeto com todas encontradas.</br></p>
 
-![image](https://github.com/faciltech/scan-user/assets/3409713/52d64e2b-bfa0-450c-96fb-c2a0a8406e32)
+![image](https://github.com/faciltech/scan-user/assets/3409713/660f46b9-2fec-4ec6-bf65-52665dac6c3f)
+
+Em seguida o script verifica se existe conta associada ao usuário inserido.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/2b3ab326-83a3-4f55-bb0b-dd621dcbd45c)
+
+Depois ele verifica informaçoes da conta do instagram.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/bc9f8b6c-a2f0-43c0-bae4-8979a4cd0362)
+
+Depois é verificado se existe uma imagem no site gravatar.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/dbf84022-14b6-4548-a78c-424b02082ba4)
+
+Depois é verifado informaçoes no site escavador.com
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/fcc95682-645d-4283-bce7-0bc52ef42aa6)
+
+Ao final ele salva as fotos baixadas do instagram, gravatar.com, cria dois arquivos .txt com as informaçoes colhidas.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/3ae9c981-047c-4ff7-99e9-1f0e1298d609)
 
 ## 🎓 Linguagem
 
