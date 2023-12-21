@@ -42,19 +42,6 @@ done
 ###### Vai ser passado o nome completo ou deixar em branco
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Digite o nome completo ou deixe em branco: \e[0m' fullname
 
-#### Inicia a verificação de redes sociais
-echo ""
-echo "#################################"
-echo "## VERIFICANDO REDES SOCIAIS...##"
-echo "#################################"
-partial() {
-
-if [[ -e $projeto/$username.txt ]]; then
-echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Saved:\e[0m\e[1;77m $projeto/$username.txt\n"
-fi
-
-}
-scanner() {
 ####################### Criar usuario
 while true; do
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Entre com o nome do usuario:\e[0m ' username
@@ -66,14 +53,26 @@ fi
 done
 
 
+#### Inicia a verificação de redes sociais
+echo ""
+echo "#################################"
+echo "## VERIFICANDO REDES SOCIAIS...##"
+echo "#################################"
+partial() {
+
+if [[ -e $projeto/$username.txt ]]; then
+echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo:\e[0m\e[1;77m $projeto/$username.txt"
+fi
+
+}
+scanner() {
 
 if [[ -e /$projeto/$username.txt ]]; then
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Removendo arquivo:\e[0m\e[1;77m $username.txt"
 rm -rf /$projeto/$username.txt
 fi
-echo -e "\n"
-echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Verificando username\e[0m\e[1;77m $username\e[0m\e[1;92m on: \e[0m\n"
-echo -e "## - REDES SOCIAIS ENCONTRADAS - ##\n" >> $projeto/$username.txt
+echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Verificando username\e[0m\e[1;77m $username\e[0m\e[1;92m on: \e[0m"
+echo -e "## - REDES SOCIAIS ENCONTRADAS - ##" >> $projeto/$username.txt
 
 ## TIKTOK
 
@@ -130,8 +129,8 @@ check=$(curl -s "https://$username.blogspot.com" -L -H "Accept-Language: en" -i 
 
 
 if [[ $check == *'1'* ]]; then
-echo -e "\e[1;92m Encontrado!\e[0m https://$username.blogspot.com\n"
-echo -e "https://$username.blogspot.com\n" >> $projeto/$username.txt
+echo -e "\e[1;92m Encontrado!\e[0m https://$username.blogspot.com"
+echo -e "https://$username.blogspot.com" >> $projeto/$username.txt
 elif [[ $check == *'0'* ]]; then
 echo -e "\e[1;93mNão Encontrado!\e[0m"
 fi
@@ -534,34 +533,35 @@ else
 		echo "[*] Status da Conta: Conta Privada" >> $projeto/$username.txt
 	fi
 	echo "[*] URL do Perfil: https://www.instagram.com/$username" >> $projeto/$username.txt
+	echo "###################################"
 #	display $projeto/$username.jpeg
 fi
 
 #### Inicia a verificação no gravatar por imagens relacionada ao email e faz o download
-
-printf "\n"
-echo "###################################"
-echo "## VERIFICANDO IMAGEM GRAVATAR...##"
-echo "###################################"
-hash=$(echo -n $email | md5sum | cut -d" " -f1)
-echo ""
-echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] VISUALIZAR FOTO NO NAVEGADOR: \e[0m"
-echo https://gravatar.com/avatar/$hash?s=600
-link=$(echo https://gravatar.com/avatar/$hash?s=600)
-echo ""
-echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
-curl -s -A "faciltech.go" $link > $projeto/gravatar.jpeg
-echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo em: \e[0m\e[1;77m$projeto/gravatar.jpg"
-
-printf "\n"
-echo "##################################"
-echo "## VERIFICANDO SITE ESCAVADOR...##"
-echo "##################################"
-
-if [[ -z $fullname ]];
+if [[ ! -z "$email" ]];
 then
-	break
-else
+	printf "\n"
+	echo "###################################"
+	echo "## VERIFICANDO IMAGEM GRAVATAR...##"
+	echo "###################################"
+	hash=$(echo -n $email | md5sum | cut -d" " -f1)
+	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] VISUALIZAR FOTO NO NAVEGADOR: \e[0m"
+	echo https://gravatar.com/avatar/$hash?s=600
+	link=$(echo https://gravatar.com/avatar/$hash?s=600)
+	echo ""
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
+	curl -s -A "faciltech.go" $link > $projeto/gravatar.jpeg
+	echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo em: \e[0m\e[1;77m$projeto/gravatar.jpg"
+	echo "###################################"
+fi
+
+if [[ ! -z "$fullname" ]];
+then
+	printf "\n"
+	echo "##################################"
+	echo "## VERIFICANDO SITE ESCAVADOR...##"
+	echo "##################################"
+
 	nome=$(echo $fullname | sed 's/ /+/g'); 
 
 	primeiroNome=$(echo $fullname | cut -d" " -f1,2)
@@ -588,5 +588,7 @@ else
 			echo "[✔] $i"
 		done
 		fi
+else
+	exit
 fi
 exit
