@@ -34,10 +34,10 @@ chmod +x scan_user.sh
 OBS: Uma outra boa dica é mover o arquivo do script para o diretório /usr/bin , dessa forma podemos utilizar de forma direta no terminal.
 ## 🧐 Como usar o script?
 Você irá digitar ```./scan_user.sh ``` 
-<p>❓<b>Ele vai perguntar o nome do projeto:</b> Voce nao pode deixar em branco</br>
-<b>❓Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas nao terá o retorno de imagem do gravatar.com</br>
-<b>❓Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas nao terá o retorno de links do site escavador.com</br>
-<b>❓Ele vai perguntar o nome do usuário:</b> Voce nao pode deixar em branco.</br>
+<p>❓<b>Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
+<b>❓Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas não terá o retorno de imagem do gravatar.com</br>
+<b>❓Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com</br>
+<b>❓Ele vai perguntar o nome do usuário:</b> Voce não pode deixar em branco.</br>
 
 Em seguida o script faz o scan em sites e redes sociais e cria uma arquivo dentro da pasta do projeto com todas encontradas.</br></p>
 
