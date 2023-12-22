@@ -442,8 +442,7 @@ fi
 # Ebay
 
 echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Ebay: \e[0m"
-check1=$(curl -s -i "https://www.ebay.com/usr/$username" -H "Accept-Language: en" -L | grep -o 'HTTP/2 404\|404 Not Found\|eBay Profile - error' ; echo $?)
-
+check1=$(curl -s "https://www.ebay.com/usr/$username" -A "Mozilla/5.0" | grep -o "usuário não foi encontrado"; echo $?)
 if [[ $check1 == *'0'* ]] ; then 
 echo -e "\e[1;93mNão Encontrado!\e[0m"
 elif [[ $check1 == *'1'* ]]; then 
@@ -548,7 +547,6 @@ then
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] VISUALIZAR FOTO NO NAVEGADOR: \e[0m"
 	echo https://gravatar.com/avatar/$hash?s=600
 	link=$(echo https://gravatar.com/avatar/$hash?s=600)
-	echo ""
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
 	curl -s -A "faciltech.go" $link > $projeto/gravatar.jpeg
 	echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo em: \e[0m\e[1;77m$projeto/gravatar.jpg"
