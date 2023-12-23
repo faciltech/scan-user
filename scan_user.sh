@@ -74,6 +74,19 @@ fi
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Verificando username\e[0m\e[1;77m $username\e[0m\e[1;92m on: \e[0m"
 echo -e "## - REDES SOCIAIS ENCONTRADAS - ##" >> $projeto/$username.txt
 
+## Kawai
+echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Kwai: \e[0m"
+check1=$(curl -s "https://www.kwai.com/@$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o "user-info"; echo $?);
+
+
+if [[ $check1 == *'1'* ]] ; then 
+echo -e "\e[1;93mNão Encontrado!\e[0m"
+elif [[ $check1 == *'0'* ]]; then 
+echo -e "\e[1;92m Encontrado!\e[0m https://kwai.com/@$username"
+echo -e "https://www.kwai.com/@$username" >> $projeto/$username.txt
+fi
+
+
 ## TIKTOK
 
 check_tiktok=$(curl -s "https://www.tiktok.com/@$username" -L -H "Accept-Language: en" | grep -o '"id":"'; echo $?)
@@ -375,7 +388,7 @@ fi
 ## TripAdvisor
 
 echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] TripAdvisor: \e[0m"
-check1=$(curl -s "https://www.tripadvisor.com/Profile/$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o '404 Not Found'; echo $?);
+check1=$(curl -s "https://www.tripadvisor.com/Profile/$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o '404 Not Found'; echo $?)
 
 if [[ $check1 == *'0'* ]] ; then 
 echo -e "\e[1;93mNão Encontrado!\e[0m"
