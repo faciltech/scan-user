@@ -375,7 +375,7 @@ fi
 ## TripAdvisor
 
 echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] TripAdvisor: \e[0m"
-check1=$(curl -s "https://www.tripadvisor.com/Profile/$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o '404 Not Found'; echo $?)
+check1=$(curl -s "https://www.tripadvisor.com/Profile/$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o '404 Not Found'; echo $?);
 
 if [[ $check1 == *'0'* ]] ; then 
 echo -e "\e[1;93mNão Encontrado!\e[0m"
