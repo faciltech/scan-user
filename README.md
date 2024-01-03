@@ -31,17 +31,26 @@ Muitas vezes precisamos verificar de forma rápida se um determinado usuário po
 ```
 chmod +x scan_user.sh
 ```
-OBS: Uma outra boa dica é mover o arquivo do script para o diretório /usr/bin , dessa forma podemos utilizar de forma direta no terminal.
+3. **Caso queira usar integrado ao telegram!**
+
+Você terá que editar o arquivo scan_user.sh, e inserir seu Token e seu id do Telegram.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/f0face68-fa9e-4606-826a-49b01b08236c)
+
+
+O Token e seu id ou do grupo podem ser adquiridos de forma simples, siga o link abaixo para saber como: https://core.telegram.org/bots/api
+   
 ## 🧐 Como usar o script?
 Você irá digitar ```./scan_user.sh ``` 
 <p>❓<b>Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
 <b>❓Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas não terá o retorno de imagem do gravatar.com</br>
 <b>❓Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com</br>
 <b>❓Ele vai perguntar o nome do usuário:</b> Voce não pode deixar em branco.</br>
+<b>❓Você quer enviar os dados para o telegram</b> Você pode responder s|S|Sim|sim ele vai validar se tem configurado na linha de código seu ID e seu TOKEN.</br>
 
 Em seguida o script faz o scan em sites e redes sociais e cria uma arquivo dentro da pasta do projeto com todas encontradas.</br></p>
 
-![image](https://github.com/faciltech/scan-user/assets/3409713/660f46b9-2fec-4ec6-bf65-52665dac6c3f)
+![image](https://github.com/faciltech/scan-user/assets/3409713/57c1db4a-b456-40fd-9171-740698d72bc2)
 
 Em seguida o script verifica se existe conta associada ao usuário inserido.
 
@@ -59,6 +68,11 @@ Depois é verifado informaçoes no site escavador.com
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/fcc95682-645d-4283-bce7-0bc52ef42aa6)
 
+
+Caso tenha cadastrado o ID e Token, e informado que gostaria que fosse enviado os resultados ao telegram, nesse momento seria enviado.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/b747fea7-ce48-4772-83d9-7db20cf35bd0)
+
 Ao final ele salva as fotos baixadas do instagram, gravatar.com, cria dois arquivos .txt com as informaçoes colhidas.
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/3ae9c981-047c-4ff7-99e9-1f0e1298d609)
@@ -66,9 +80,6 @@ Ao final ele salva as fotos baixadas do instagram, gravatar.com, cria dois arqui
 ## 🎓 Linguagem
 
 O utilitário é desenvolvido em linguagem shellscript.
-
-
-
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
