@@ -7,8 +7,16 @@ echo "Linkedin : https://www.linkedin.com/in/eduardo-a-02194451/"
 echo "Uso: ./scan-user.sh"
 echo "OBS 1: O nome completo ajuda na busca por links no site escavador;"
 echo "OBS 2: O email ajuda na busca da imagem no site gravatar;"
+echo "Atualização: 03/01/2024"
 trap 'printf "\n";partial;exit 1' 2
 echo ""
+echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Inicio do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
+echo ""
+
+
+##### CONFIGURAR OS DADOS DE TOKEN E ID DO TELEGRAM
+token=""
+id=""
 
 #### Condicao para criar um novo projeto caso este nome ja exista
 
@@ -52,6 +60,8 @@ else
 fi
 done
 
+###### CASO QUEIRA ENVIAR DADOS PARA O INSTAGRAM DEVE INFORMAR (S,s,SIM,sim)
+read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Você quer enviar os dados para o telegram (S,s,SIM,Sim,sim)? \e[0m ' INFOTELEGRAM
 
 #### Inicia a verificação de redes sociais
 echo ""
@@ -73,19 +83,6 @@ rm -rf /$projeto/$username.txt
 fi
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Verificando username\e[0m\e[1;77m $username\e[0m\e[1;92m on: \e[0m"
 echo -e "## - REDES SOCIAIS ENCONTRADAS - ##" >> $projeto/$username.txt
-
-## Kawai
-echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Kwai: \e[0m"
-check1=$(curl -s "https://www.kwai.com/@$username" -H "Accept-Language: en" --user-agent 'Mozilla/5.0' | grep -o "user-info"; echo $?);
-
-
-if [[ $check1 == *'1'* ]] ; then 
-echo -e "\e[1;93mNão Encontrado!\e[0m"
-elif [[ $check1 == *'0'* ]]; then 
-echo -e "\e[1;92m Encontrado!\e[0m https://kwai.com/@$username"
-echo -e "https://www.kwai.com/@$username" >> $projeto/$username.txt
-fi
-
 
 ## TIKTOK
 
@@ -429,44 +426,45 @@ scanner
 
 
 echo ""
-echo "#################################"
-echo "## VERIFICANDO INSTAGRAM...    ##"
-echo "#################################"
+echo "#############################"
+echo "## VERIFICANDO INSTAGRAM...##"
+echo "#############################"
 
-nome_perfil=$(curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev)
+site="https://www.pixwox.com/profile/"
+nome_perfil=$(curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev)
 
 if [ -z "$nome_perfil"  ]
 then
-        echo "[*] : Esta conta nao existe !!!" 
+        echo -e "\e[1;93mEsta conta não existe!\e[0m"
 else
-	echo "################### INSTAGRAM ############################" >> $projeto/$username.txt
+	echo "##### INSTAGRAM #####" >> $projeto/$username.txt
 	echo "" >> $projeto/$username.txt
 	echo "[*] Nome de usuario: @$username" >> $projeto/$username.txt
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Nome de usuario:\e[0m @$username"
 
-	echo "[*] Nome: " `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev` >> $projeto/$username.txt
-	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Nome:\e[0m`curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev`"
+	echo "[*] Nome: " `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev` >> $projeto/$username.txt
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Nome:\e[0m`curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"fullname">/ {print $2}' | cut -c 12- | rev | cut -c6- | rev`"
 
 
-	echo "[*] Posts: " `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==1{print}'` >> $projeto/$username.txt
-	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Posts:\e[0m `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==1{print}'`"
+	echo "[*] Posts: " `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==1{print}'` >> $projeto/$username.txt
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Posts:\e[0m `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==1{print}'`"
 
-	echo "[*] Seguidores: " `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==2{print}'` >> $projeto/$username.txt
-	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Seguidores:\e[0m `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==2{print}'`"
+	echo "[*] Seguidores: " `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==2{print}'` >> $projeto/$username.txt
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Seguidores:\e[0m `curl -s $site/$username/-A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==2{print}'`"
 
-	echo "[*] Seguindo: " `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==3{print}'` >> $projeto/$username.txt
-	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Seguindo:\e[0m `curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==3{print}'`"
+	echo "[*] Seguindo: " `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==3{print}'` >> $projeto/$username.txt
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Seguindo:\e[0m `curl -s $site/$username/ -A "faciltech.go" | awk -F= '/"num"/ {print $3}' | cut -c 2- | rev | cut -c3- | rev | awk 'NR==3{print}'`"
 
 	echo "[*] Link da foto do perfil: " >> $projeto/$username.txt
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Link da Foto:\e[0m Foto salva em $projeto/$username.jpeg " 
 
-	imagem=$(curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk '/href/&&/scontent/ {print $2}' | cut -c 7- | rev | cut -c10- | rev)
+	imagem=$(curl -s $site/$username/ -A "faciltech.go" | awk '/href/&&/scontent/ {print $2}' | cut -c 7- | rev | cut -c10- | rev)
 	echo $imagem >> $projeto/$username.txt
 	link=$(echo $imagem)
 	curl -s -A "Mozilla 2.0" $link > $projeto/$username.jpeg
 
 
-	status=$(curl -s https://www.picnob.com/profile/$username/ -A "faciltech.go" | awk -F= '/This account/ {print}' | cut -c 18- | rev | cut -c7- | rev)
+	status=$(curl -s $site/$username/ -A "faciltech.go" | awk -F= '/This account/ {print}' | cut -c 18- | rev | cut -c7- | rev)
 	if [ -z "$status"  ]
 	then
 		echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Status da Conta:\e[0m CONTA PUBLICA"
@@ -475,9 +473,9 @@ else
 		echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]Status da Conta:\e[0m CONTA PRIVADA"
 		echo "[*] Status da Conta: Conta Privada" >> $projeto/$username.txt
 	fi
+	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m]URL do Perfil: https://www.instagram.com/$username" 
 	echo "[*] URL do Perfil: https://www.instagram.com/$username" >> $projeto/$username.txt
 	echo "###################################"
-#	display $projeto/$username.jpeg
 fi
 
 #### Inicia a verificação no gravatar por imagens relacionada ao email e faz o download
@@ -489,7 +487,10 @@ then
 	echo "###################################"
 	hash=$(echo -n $email | md5sum | cut -d" " -f1)
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] VISUALIZAR FOTO NO NAVEGADOR: \e[0m"
-	echo https://gravatar.com/avatar/$hash?s=600
+	echo "https://gravatar.com/avatar/$hash?s=600"
+
+	echo "### Foto Gravatar ###" >> $projeto/$username.txt
+	echo "https://gravatar.com/avatar/$hash?s=600" >> $projeto/$username.txt
 	link=$(echo https://gravatar.com/avatar/$hash?s=600)
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
 	curl -s -A "faciltech.go" $link > $projeto/gravatar.jpeg
@@ -503,6 +504,7 @@ then
 	echo "##################################"
 	echo "## VERIFICANDO SITE ESCAVADOR...##"
 	echo "##################################"
+	echo "### Escavador ###" >> $projeto/$username.txt
 
 	nome=$(echo $fullname | sed 's/ /+/g'); 
 
@@ -517,14 +519,20 @@ then
 			echo "Foram encontrado $res resultados !!!"
 			echo ""
 			echo "#### LINKS ENCONTRADOS ####"
-			touch $projeto/escavador.txt
-			echo "Links Encontrados:" > $projeto/escavador.txt
-			echo "" > $projeto/escavador.txt
+			echo "Links Encontrados:" >> $projeto/$username.txt
+			echo "" >> $projeto/$username.txt
+			echo "" >> $projeto/escavador.txt
 		for i in $(seq 1 3);
 		do
-			echo $(curl -s 'https://www.escavador.com/busca?qo=t&q=%22'."$nome".'%22&qo=t&page='."$i".'' -A "Mozilla 2.0" | grep "link-address" | cut -d">" -f2 | cut -d"<" -f1) >> $projeto/escavador.txt
+			link=$(curl -s 'https://www.escavador.com/busca?qo=t&q=%22'."$nome".'%22&qo=t&page='."$i".'' -A "Mozilla 2.0" | grep "link-address" | cut -d">" -f2 | cut -d"<" -f1)
+			for i in $(echo $link);
+			do
+				echo $i >> $projeto/$username.txt
+				echo $i >> $projeto/escavador.txt
+			done;
+
 		done
-		echo "Os links foram salvos no arquivo $projeto/escavador.txt"
+		echo "Os links foram salvos no arquivo $projeto/$username.txt"
 		for i in $(cat $projeto/escavador.txt);
 		do
 			echo "[✔] $i"
@@ -533,4 +541,23 @@ then
 else
 	exit
 fi
-exit
+
+#### Caso tenha setado a opção "sim" na etada de envio para o telegram, será feito isso agora
+case $INFOTELEGRAM in
+S|s|Sim|SIM|sim)
+        if [[ -n $token ]] || [[ -n $id ]]
+        then
+                curl --silent  -F caption="Informacões do $username" -F document=@"$projeto/$username.txt" -A "Mozilla 2.0"  https://api.telegram.org/bot"$token"/sendDocument?chat_id="$id" | grep -q '"ok":true';
+                curl --silent  -F caption="Informacões do $username" -F document=@"$projeto/escavador.txt" -A "Mozilla 2.0"  https://api.telegram.org/bot"$token"/sendDocument?chat_id="$id" | grep -q '"ok":true';
+                curl --silent  -F caption="Foto do gravatar" -F document=@"$projeto/gravatar.jpeg" -A "Mozilla 2.0"  https://api.telegram.org/bot"$token"/sendDocument?chat_id="$id" | grep -q '"ok":true';
+                curl --silent  -F caption="Foto do instagram" -F document=@"$projeto/$username.jpeg" -A "Mozilla 2.0"  https://api.telegram.org/bot"$token"/sendDocument?chat_id="$id" | grep -q '"ok":true';
+        else
+                echo "Você deve alterar inserir o token e seu id para poder receber as informações no instagram!!!"
+        fi
+;;
+*) echo "Opcao Invalida!" ;;
+esac
+echo ""
+echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Fim do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
+
+exit ## encerra o programa
