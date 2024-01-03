@@ -47,7 +47,8 @@ O Token e seu id ou do grupo podem ser adquiridos de forma simples, siga o link 
    
 ## 🧐 Como usar o script?
 Você irá digitar ```./scan_user.sh ``` 
-<p><b>❓ Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
+<p>
+<b>❓ Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
 <b>❓ Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas não terá o retorno de imagem do gravatar.com</br>
 <b>❓ Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com</br>
 <b>❓ Ele vai perguntar o nome do usuário:</b> Voce não pode deixar em branco.</br>
