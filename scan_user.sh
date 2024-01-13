@@ -555,7 +555,7 @@ S|s|Sim|SIM|sim)
                 echo "Você deve alterar inserir o token e seu id para poder receber as informações no instagram!!!"
         fi
 ;;
-*) echo "Opcao Invalida!" ;;
+*) echo "Relatório não enviado para o Telegram!" ;;
 esac
 echo ""
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Fim do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
