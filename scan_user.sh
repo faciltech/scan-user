@@ -1,5 +1,4 @@
 #!/bin/bash
-figlet SCAN-USER
 echo "Autor: Eduardo Amaral - eduardo4maral@protonmail.com"
 echo "You Tube : https://www.youtube.com/faciltech"
 echo "github   : https://github.com/faciltech"
