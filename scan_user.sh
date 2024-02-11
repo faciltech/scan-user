@@ -7,7 +7,8 @@ echo "Uso: ./scan-user.sh"
 echo "OBS 1: O nome completo ajuda na busca por links no site escavador;"
 echo "OBS 2: O email ajuda na busca da imagem no site gravatar;"
 echo "OBS 3: A base de dados de falecidos não possui dados de menores de 18 anos."
-echo "Atualização: 29/01/2024"
+echo "OBS 4: Você pode utilizar um nome de usuário ou vários separados por ',' (virgulas)."
+echo "Atualização: 11/02/2024"
 trap 'printf "\n";partial;exit 1' 2
 echo ""
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Inicio do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
@@ -45,6 +46,7 @@ site_roblox="roblox.com/users/profile?username="
 site_ebay="ebay.com/usr"
 site_instagram="https://www.pixwox.com/profile"
 site_gravatar="gravatar.com/avatar"
+site_gravatar1="gravatar.com/"
 site_escavador="escavador.com/busca?qo=t&q="
 site_jusbrasil="jusbrasil.com.br/diarios/busca?q="
 site_falecidos="falecidosnobrasil.org.br"
@@ -510,7 +512,7 @@ then
 	res1=$(curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2)
 	res2=$(curl -s "https://www.falecidosnobrasil.org.br/resultado2.php?nome=$nome&exata=true" | grep -o "card"; echo $?)
 	res3=$(curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2;)
-	if [ $res == 0 ]; 
+	if [ "$res" == 0 ]; 
 	then 
         	echo -e "\033[1;31m[-] Nada encontrado no Escavador\033[0m"; 
 	else 
@@ -548,9 +550,9 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
         	curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2 >> $projeto/jusbrasil.txt
         for i in $(seq 1 3);
         do
-                curl -s "https://www.jusbrasil.com.br/diarios/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "diarios" |grep -v "busca"| cut -d'"' -f2 >> $projeto/jusbrasil.txt
+                curl -s "https://www.$site_jusbrasil%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "diarios" |grep -v "busca"| cut -d'"' -f2 >> $projeto/jusbrasil.txt
         done;
-                curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2 >> $projeto/jusbrasil.txt
+                curl -s "https://www.$site_jusbrasil%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2 >> $projeto/jusbrasil.txt
 
         	echo " "
         	echo -e "\e[1;92m###### Links Encontrados no Site Jusbrasil ####### \e[0m"
