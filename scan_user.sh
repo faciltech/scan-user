@@ -134,12 +134,16 @@ done
 ###### Vai ser passado o nome completo ou deixar em branco
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Digite o nome completo ou deixe em branco: \e[0m' fullname
 echo "Nome: $fullname" >> $projeto/relatorio_$projeto.txt
+
 ####################### Criar usuario
 # SE TIVER VAZIO NÃO SERÁ VERIFICADO AS REDES SOCIAIS
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Entre com o nome do usuario(s) (separado por virgula) ou deixe em branco:\e[0m ' nickname
 echo "Nickname: $nickname" >> $projeto/relatorio_$projeto.txt
+
 ###### CASO QUEIRA ENVIAR DADOS PARA O TELEGRAM DEVE INFORMAR (S,s,SIM,sim)
+if [[ ! -z $token ]];then
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Você quer enviar os dados para o telegram (S,s,SIM,Sim,sim)? \e[0m ' INFOTELEGRAM
+fi
 
 
 ####### Nome do projeto
