@@ -42,16 +42,27 @@ Você terá que editar o arquivo scan_user.sh, e inserir seu Token e seu id do T
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/f0face68-fa9e-4606-826a-49b01b08236c)
 
-
 O Token e seu id ou do grupo podem ser adquiridos de forma simples, siga o link abaixo para saber como: https://core.telegram.org/bots/api
+4. **Caso queira usar um banco de dados!**
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/d18a9e04-72dd-4dcc-b520-1fdec2d8b51b)
+
+Caso tenha um banco de dados, poderá ser passado o caminho nessa variável, como na imagem. Caso não seja passado o scrip não fará as perguntas necessárias.
+Nesse caso, eu coloquei um arquivo no seguinte formato, podendo ser em .txt.
+```
+nomecompleto,cpf,data_de_nascimento,sexo
+```
+Será necessário inserir ou o nome completo ou o cpf (Mas você pode ajustar de acordo com o seu banco de dados).
+
    
 ## 🧐 Como usar o script?
 Você irá digitar ```./scan_user.sh ``` 
 <p>
 <b>❓ Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
+<b>❓ Ele vai perguntar se deseja usar o banco de dados, caso tenha inserido o caminho do arquivo:</b> Você pode passar o nome completo ou mesmo o cpf.</br>
 <b>❓ Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas não terá o retorno de imagem do gravatar.com</br>
 <b>❓ Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com</br>
-<b>❓ Ele vai perguntar o nome do usuário:</b> Voce não pode deixar em branco.</br>
+<b>❓ Ele vai perguntar o nome do usuário:</b> Voce pode deixar em branco, inserir um nome de usuário ou inserir vários, separando-os por virgulas (nick1,nick2,nick3).</br>
 <b>❓ Você quer enviar os dados para o telegram</b> Você pode responder s|S|Sim|sim ele vai validar se tem configurado na linha de código seu ID e seu TOKEN.</br>
 
 Em seguida o script faz o scan em sites e redes sociais e cria uma arquivo dentro da pasta do projeto com todas encontradas.</br></p>
