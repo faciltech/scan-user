@@ -18,7 +18,7 @@ echo ""
 ####### VARIAVEIS IMPORTANTES #####
 user_agent="-L --user-agent 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:0.9.3) Gecko/20010801'"
 linguagem="-H 'Accept-Language: en'"
-bd=""
+bd="banco.txt"
 
 ##### VARIAVEIS DOS SITES USADOS
 site_tiktok="tiktok.com"
