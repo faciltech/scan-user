@@ -479,10 +479,6 @@ do
         echo -e "https://www.$site_ebay/usr/$username" >> $projeto/$username.txt
         fi
 
-
-
-
-
 	partial
 	}
 	scanner
@@ -595,6 +591,8 @@ then
         	do
                 	echo "[✔] $i"
         	done
+		echo "##### ESCAVADOR ######" >> $projeto/relatorio_$projeto.txt
+                cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
 	fi
 
 ####### VERIFICA AS INFORMAÇÕES NO SITE JUSBRASIL
@@ -623,21 +621,16 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
         	do
                 	echo "[-] $i"
         	done
+		echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
+	        cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
 	fi
-	echo "" >> $projeto/$username.txt
-	echo "##### ESCAVADOR ######" >> $projeto/relatorio_$projeto.txt
-	cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
-	echo "" >> $projeto/$username.txt
-echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
-	cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
-	echo "" >> $projeto/relatorio_$projeto.txt
 	echo "##################################" >> $projeto/relatorio_$projeto.txt
 ####### VERIFICA AS INFORMAÇÕES DE PROVA DE VIDA
 
 	if [[ $res2 == *'0'* ]]; then
 		printf "\n"
                 echo "##################################"
-                echo "##	 TESTE DE VIDA...      ##"
+                echo "##	 TESTE DE VIDA...     ##"
                 echo "##################################"
 
         	echo -e "\e[1;92mNome consta na base de Falecidos.\e[0m"
