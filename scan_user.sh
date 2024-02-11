@@ -568,7 +568,7 @@ then
 
 	res=$(curl -s "https://www.$site_escavador%22$nome%22" $user_agent | grep "resu" | cut -d">" -f2 | cut -d"<" -f1 | cut -d" " -f1)
 	res1=$(curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2)
-	res2=$(curl -s "https://www.falecidosnobrasil.org.br/resultado2.php?nome=$nome&exata=true" | grep -o "card"; echo $?)
+	res2=$(curl -s "https://www.falecidosnobrasil.org.br/resultado2.php?nome=$nome&exata=false" | grep -o "card"; echo $?)
 	res3=$(curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2;)
 	if [ "$res" -eq 0 ]; 
 	then 
@@ -634,7 +634,7 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
                 echo "##################################"
 
         	echo -e "\e[1;92mNome consta na base de Falecidos.\e[0m"
-        	curl -s "https://www.$site_falecidos/resultado2.php?nome=$nome&exata=true" | grep "card" | cut -d">" -f2 | cut -d "<" -f1
+        	curl -s "https://www.$site_falecidos/resultado2.php?nome=$nome&exata=false" | grep "card" | cut -d">" -f2 | cut -d "<" -f1
 	elif [[ $res2 == *'1'* ]]; then
         	echo -e "\033[1;31m[-] Não Consta na base de dados de Falecidos!\033[0m"
 	fi
