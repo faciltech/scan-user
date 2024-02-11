@@ -61,7 +61,7 @@ Você irá digitar ```./scan_user.sh ```
 <b>❓ Ele vai perguntar o nome do projeto:</b> Voce não pode deixar em branco</br>
 <b>❓ Ele vai perguntar se deseja usar o banco de dados, caso tenha inserido o caminho do arquivo:</b> Você pode passar o nome completo ou mesmo o cpf.</br>
 <b>❓ Ele vai perguntar o nome do email:</b> Voce pode deixar em branco, mas não terá o retorno de imagem do gravatar.com</br>
-<b>❓ Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com</br>
+<b>❓ Ele vai perguntar o nome completo:</b> Voce pode deixar em branco, mas não terá o retorno de links do site escavador.com, jusbrasil e faz a Prova de Vida também.</br>
 <b>❓ Ele vai perguntar o nome do usuário:</b> Voce pode deixar em branco, inserir um nome de usuário ou inserir vários, separando-os por virgulas (nick1,nick2,nick3).</br>
 <b>❓ Você quer enviar os dados para o telegram</b> Você pode responder s|S|Sim|sim ele vai validar se tem configurado na linha de código seu ID e seu TOKEN.</br>
 
@@ -81,10 +81,17 @@ Depois é verificado se existe uma imagem no site gravatar.
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/dbf84022-14b6-4548-a78c-424b02082ba4)
 
-Depois é verifado informaçoes no site escavador.com
+Depois é verifado informações no site escavador.com
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/fcc95682-645d-4283-bce7-0bc52ef42aa6)
 
+Depois é verificado informações no site jusbrasil.com
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/053ca046-4088-4dc0-9cea-b30bb6f0070b)
+
+Também é feito através do nome completo a prova de vida:
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/2066497c-54ba-4dfb-be21-3fbacbd66170)
 
 Caso tenha cadastrado o ID e Token, e informado que gostaria que fosse enviado os resultados ao telegram, nesse momento seria enviado.
 
