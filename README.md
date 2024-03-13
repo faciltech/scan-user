@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/faciltech/scan-user/assets/3409713/0668c1c0-c4d7-40df-b0aa-4443be4dccc9" width="300">
+  <img src="https://github.com/faciltech/scan-user/assets/3409713/ddbe101b-a4f5-448d-833b-769679245252" width="300">
 </p>
 <p align="center">
   <img src="https://github.com/faciltech/scan-user/assets/3409713/d5c035b9-f723-426a-856b-a472bbfe737d">
