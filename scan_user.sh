@@ -8,7 +8,7 @@ echo "OBS 1: O nome completo ajuda na busca por links no site escavador, jusbras
 echo "OBS 2: O email ajuda na busca da imagem no site gravatar;"
 echo "OBS 3: A base de dados de falecidos não possui dados de menores de 18 anos."
 echo "OBS 4: Você pode inserir um nickname ou vários separados por virgulas (nick1,nick2)"
-echo "Atualização: 11/02/2024"
+echo "Atualização: 01/04/2024"
 trap 'printf "\n";partial;exit 1' 2
 echo ""
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Inicio do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
@@ -25,7 +25,6 @@ site_tiktok="tiktok.com"
 site_facebook="facebook.com"
 site_twitter="twitter.com"
 site_youtube="youtube.com"
-site_blogger="blogspot.com"
 site_reddit="reddit.com"
 site_wordpress="wordpress.com"
 site_pinterest="pinterest.com"
@@ -145,7 +144,6 @@ if [[ ! -z $token ]];then
 read -p $'\e[1;92m[\e[0m\e[1;77m?\e[0m\e[1;92m] Você quer enviar os dados para o telegram (S,s,SIM,Sim,sim)? \e[0m ' INFOTELEGRAM
 fi
 
-
 ####### Nome do projeto
 echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Nome do Projeto:  \e[0m$projeto"
 
@@ -221,20 +219,6 @@ do
 	elif [[ $check_youtube == *'0'* ]]; then
 	echo -e "\e[1;93mNão Encontrado!\e[0m"
 	fi
-
-	## BLOGGER
-
-	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Blogger: \e[0m"
-	check=$(curl -s "https://$username.$site_blogger" $user_agent | grep -o 'HTTP/2 404'; echo $?)
-
-
-	if [[ $check == *'1'* ]]; then
-	echo -e "\e[1;92m Encontrado!\e[0m https://$username.$site_blogger"
-	echo -e "https://$username.$site_blogger" >> $projeto/$username.txt
-	elif [[ $check == *'0'* ]]; then
-	echo -e "\e[1;93mNão Encontrado!\e[0m"
-	fi
-
 
 	## REDDIT
 
@@ -561,7 +545,16 @@ then
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
 	curl -s $user_agent $link > $projeto/gravatar.jpeg
 	echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo em: \e[0m\e[1;77m$projeto/gravatar.jpg"
-	echo "###################################"
+	res=$(curl -s https://api.proxynova.com/comb?query=$email | jq | grep "$email" > /dev/null; echo $?)
+	if [ $res -eq 0 ] 
+	then
+		echo "##############################"
+		echo "## VAZEMENTO DE CREDENCIAIS ##"
+		echo "##############################"
+		curl -s https://api.proxynova.com/comb?query=$email | jq | grep "$email" | cut -d'"' -f2
+	else
+		echo -e "\033[1;31mNenhum vazamento de dados encontrado !!!\033[0m";
+	fi
 fi
 
 ########### VERIFICAR AS INFORMAÇÕES DO ESCAVADOR
@@ -570,14 +563,13 @@ if [[ ! -z "$fullname" ]];
 then
 	nome=$(echo $fullname | sed 's/ /+/g'); 
 
-        res=$(curl -s "https://www.$site_escavador%22$nome%22" $user_agent | grep "resu" | cut -d">" -f2 | cut -d"<" -f1 | cut -d" " -f1)
-        res1=$(curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2)
-        res2=$(curl -s "https://www.$site_falecidos/resultado2.php?nome=$nome&exata=false" | grep -o "card"; echo $?)
-        res3=$(curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2;)
-
+	res=$(curl -s "https://www.$site_escavador%22$nome%22" $user_agent | grep "resu" | cut -d">" -f2 | cut -d"<" -f1 | cut -d" " -f1 | head -n1)
+	res1=$(curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2)
+	res2=$(curl -s "https://www.falecidosnobrasil.org.br/resultado2.php?nome=$nome&exata=true" | grep -o "card"; echo $?)
+	res3=$(curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2;)
 	if [ "$res" -eq 0 ]; 
 	then 
-        	echo -e "\033[1;31mNada encontrado no Escavador\033[0m"; 
+        	echo -e "\033[1;31m[-] Nada encontrado no Escavador\033[0m"; 
 	else 
 		printf "\n"
         	echo "##################################"
@@ -585,19 +577,13 @@ then
 	        echo "##################################"
         	echo "Foram encontrado $res resultados no site Escavador !!!" 
         	echo "" > $projeto/escavador.txt
-        	for i in $(seq 1 3);
-        	do
-                	curl -s "https://www.$site_escavador%22$nome%22&qo=t&page=$i" $user_agent | grep "link-address" | cut -d">" -f2 | cut -d"<" -f1 >> $projeto/escavador.txt
-        	done
 
         	echo -e "\e[1;92m###### Links Encontrados no Site Escavador ######## \e[0m"
 
-        	for i in $(cat $projeto/escavador.txt);
+        	for i in $(seq 1 3);
         	do
-                	echo "[✔] $i"
+                	curl -s "https://www.$site_escavador%22$nome%22&qo=t&page=$i" $user_agent | grep "link-address" | cut -d">" -f2 | cut -d"<" -f1 | tee -a $projeto/escavador.txt
         	done
-		echo "##### ESCAVADOR ######" >> $projeto/relatorio_$projeto.txt
-                cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
 	fi
 
 ####### VERIFICA AS INFORMAÇÕES NO SITE JUSBRASIL
@@ -605,6 +591,7 @@ then
 if [[ -z "$res1" ]] && [[ -z "$res3" ]];
 	then
         	echo -e "\033[1;31m[-] Nada encontrado no Jusbrasil\033[0m";
+
 	else
 		printf "\n"
         	echo "##################################"
@@ -612,34 +599,36 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
 	        echo "##################################"
 
         	echo "" > $projeto/jusbrasil.txt
-#        	curl -s "https://www.$site_jusbrasil%22$nome%22" $user_agent | sed 's/\s/\n/g' | grep 'href="https' | grep -v "busca" | grep -w "diarios" | cut -d'"' -f2 >> $projeto/jusbrasil.txt
+	     	echo -e "\e[1;92m###### Links Encontrados no Site Jusbrasil ####### \e[0m"
+
         for i in $(seq 1 3);
         do
-                curl -s "https://www.jusbrasil.com.br/diarios/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "diarios" |grep -v "busca"| cut -d'"' -f2 >> $projeto/jusbrasil.txt
+                curl -s "https://www.jusbrasil.com.br/diarios/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "diarios" |grep -v "busca"| cut -d'"' -f2 | tee -a $projeto/jusbrasil.txt
         done;
-                curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2 >> $projeto/jusbrasil.txt
-
-        	echo " "
-        	echo -e "\e[1;92m###### Links Encontrados no Site Jusbrasil ####### \e[0m"
-
-        	for i in $(cat $projeto/jusbrasil.txt);
-        	do
-                	echo "[-] $i"
-        	done
-		echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
-	        cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
+                curl -s "https://www.jusbrasil.com.br/busca?q=%22$nome%22&p=$i" -H "Accept-Language: en" -L --user-agent "Mozilla/5.0" | sed 's/\s/\n/g' | grep 'href="https' | grep "processos" | cut -d'"' -f2 | tee -a $projeto/jusbrasil.txt
 	fi
+
+	echo "" >> $projeto/$username.txt
+	echo "##### ESCAVADOR ######" >> $projeto/relatorio_$projeto.txt
+	cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
+	echo "" >> $projeto/$username.txt
+
+	echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
+
+	cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
+	echo "" >> $projeto/relatorio_$projeto.txt
 	echo "##################################" >> $projeto/relatorio_$projeto.txt
-####### VERIFICA AS INFORMAÇÕES DE PROVA DE VIDA
+
+	####### VERIFICA AS INFORMAÇÕES DE PROVA DE VIDA
 
 	if [[ $res2 == *'0'* ]]; then
 		printf "\n"
                 echo "##################################"
-                echo "##	 TESTE DE VIDA...     ##"
+                echo "##	 TESTE DE VIDA...      ##"
                 echo "##################################"
 
         	echo -e "\e[1;92mNome consta na base de Falecidos.\e[0m"
-        	curl -s "https://www.$site_falecidos/resultado2.php?nome=$nome&exata=false" | grep "card" | cut -d">" -f2 | cut -d "<" -f1
+        	curl -s "https://www.$site_falecidos/resultado2.php?nome=$nome&exata=true" | grep "card" | cut -d">" -f2 | cut -d "<" -f1
 	elif [[ $res2 == *'1'* ]]; then
         	echo -e "\033[1;31m[-] Não Consta na base de dados de Falecidos!\033[0m"
 	fi
