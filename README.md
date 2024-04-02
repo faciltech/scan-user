@@ -85,6 +85,11 @@ Depois é verificado se existe uma imagem no site gravatar.
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/dbf84022-14b6-4548-a78c-424b02082ba4)
 
+Em seguida verifica se existe alguma senha vazada na internet, caso haja é mostrada na tela.
+
+![image](https://github.com/faciltech/scan-user/assets/3409713/2047d112-fea9-4b3b-9f69-bb78fb277852)
+
+
 Depois é verifado informações no site escavador.com
 
 ![image](https://github.com/faciltech/scan-user/assets/3409713/fcc95682-645d-4283-bce7-0bc52ef42aa6)
