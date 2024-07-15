@@ -545,13 +545,13 @@ then
 	echo -e "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] BAIXANDO IMAGEM DO PERFIL GRAVATAR: \e[0m" 
 	curl -s $user_agent $link > $projeto/gravatar.jpeg
 	echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Salvo em: \e[0m\e[1;77m$projeto/gravatar.jpg"
-	res=$(curl -s https://api.proxynova.com/comb?query=$email | jq | grep "$email" > /dev/null; echo $?)
+	res=$(curl -s https://api.proxynova.com/comb?query=$email | grep "$email"  | cut -d'"' -f2 > /dev/null; echo $?)
 	if [ $res -eq 0 ] 
 	then
 		echo "##############################"
 		echo "## VAZEMENTO DE CREDENCIAIS ##"
 		echo "##############################"
-		curl -s https://api.proxynova.com/comb?query=$email | jq | grep "$email" | cut -d'"' -f2
+		curl -s https://api.proxynova.com/comb?query=$email | grep "$email" | cut -d'"' -f2
 	else
 		echo -e "\033[1;31mNenhum vazamento de dados encontrado !!!\033[0m";
 	fi
