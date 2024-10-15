@@ -11,6 +11,35 @@
 Meu principal objetivo é criar uma ferramenta no idioma português brasileiro, que atenda a comunidade nacional, claro que o resultado pode ser interepretado por qualquer usuário seja de qual país esteja fazendo uso. Mas todo esforço é para que nossa comunidade cresça, e que outros profissionais venham desenvolver produções nacionais.
 A ideia alvo desse script simples é verificar a partir de um email e um nick name, contas de usuários nas redes sociais e outros sites, além de tentar verificar fotos e ainda tem a capacidade de enviar pro telegram.
 
+<h2> Redes Sociais que estão incluídas:</h2>
+[✔] TikTok:  
+[✔] Facebook
+[✔] Onlyfans
+[✔] Mercado Livre
+[✔] Twitter
+[✔] YouTube
+[✔] Reddit
+[✔] Wordpress
+[✔] Pinterest
+[✔] GitHub
+[✔] Tumblr
+[✔] Flickr
+[✔] Steam
+[✔] SoundCloud
+[✔] Medium
+[✔] About.me
+[✔] SlideShare
+[✔] Spotify
+[✔] Scribd
+[✔] Pastebin
+[✔] Foursquare
+[✔] Roblox
+[✔] Ebay
+[✔] Gravatar
+<p align="center">
+<img src="https://github.com/user-attachments/assets/ffba8f4c-cdd1-4083-bd38-fc8f818d3dcd">
+</p>
+
 ## Observação importante:
 - Fiz questão de comentar o código para ficar de fácil entendimento, além de não fazer uso de muitas expressões regulares para que iniciantes também possam entender do que se trata, mas os usuários mais avançados fiquem a vontade para deixar o código mais limpo.
 - Outra importante observação é que os dominios dos sites utilizados podem sofrer modificações, assim como a chamada de usuário nas redes sociais, por isso é importante sempre verificar o porque os resultados trazem falsos positivos, caso vejam algo informe pelo linkedin ou por email.
