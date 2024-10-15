@@ -8,7 +8,7 @@ echo "OBS 1: O nome completo ajuda na busca por links no site escavador, jusbras
 echo "OBS 2: O email ajuda na busca da imagem no site gravatar;"
 echo "OBS 3: A base de dados de falecidos não possui dados de menores de 18 anos."
 echo "OBS 4: Você pode inserir um nickname ou vários separados por virgulas (nick1,nick2)"
-echo "Atualização: 01/04/2024"
+echo "Atualização: 15/10/2024"
 trap 'printf "\n";partial;exit 1' 2
 echo ""
 echo -e "\e[1;92m[\e[0m\e[1;77m*\e[0m\e[1;92m] Inicio do Scan:\e[0m\e[1;77m  $(date +%d/%m/%y) - às $(date +%T)" 
@@ -21,9 +21,10 @@ linguagem="-H 'Accept-Language: en'"
 bd="banco.txt"
 
 ##### VARIAVEIS DOS SITES USADOS
+site_mercadolivre="loja.mercadolivre.com.br"
 site_tiktok="tiktok.com"
 site_facebook="facebook.com"
-site_twitter="twitter.com"
+site_twitter="nitter.privacydev.net"
 site_youtube="youtube.com"
 site_reddit="reddit.com"
 site_wordpress="wordpress.com"
@@ -50,7 +51,7 @@ site_escavador="escavador.com/busca?qo=t&q="
 site_jusbrasil="jusbrasil.com.br/diarios/busca?q="
 site_falecidos="falecidosnobrasil.org.br"
 site_telegram_api="falecidosnobrasil.org.br"
-
+site_onlyfans="fanscout.com"
 
 ##### CONFIGURAR OS DADOS DE TOKEN E ID DO TELEGRAM
 token=""
@@ -183,7 +184,7 @@ do
 	echo -e "\e[1;93mNão Encontrado!\e[0m"
 	fi
 
-	## Facebook
+	## FACEBOOK
 
 	check_face=$(curl -s "https://www.$site_facebook/$username" $user_agent | grep -o 'not found'; echo $?)
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Facebook: \e[0m"
@@ -195,14 +196,39 @@ do
 	echo -e "\e[1;93mNão Encontrado!\e[0m"
 	fi
 
+
+	### OLNLYFANS
+
+        check_onlyfans=$(curl -s "https://$site_onlyfans/$username" $user_agent | grep -o 'not exist'; echo $?)
+        echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Onlyfans: \e[0m"
+
+        if [[ $check_onlyfans == *'1'* ]]; then
+        echo -e "\e[1;92m Encontrado!\e[0m https://onlyfans.com/$username"
+	echo -e "https://onlyfans.com/$username" >> $projeto/$username.txt
+        elif [[ $check_onlyfans == *'0'* ]]; then
+        echo -e "\e[1;93mNão Encontrado!\e[0m"
+        fi
+	
+	## MERCADO LIVRE
+	loja=$(echo $name | sed 's/ /-/g')
+        check_ml=$(curl -s "https://$site_mercadolivre/$loja" $user_agent | grep -o 'Insira a sua busca'; echo $?)
+        echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Mercado Livre: \e[0m"
+	echo -e "https://www.$site_mercadolivre/$loja" >> $projeto/$username.txt
+        if [[ $check_ml == *'1'* ]]; then
+        echo -e "\e[1;92m Encontrado!\e[0m https://loja.mercadolivre.com.br/$loja"
+        elif [[ $check_ml == *'0'* ]]; then
+        echo -e "\e[1;93mNão Encontrado!\e[0m"
+        fi
+
+
 	## TWITTER 
 
-	check_twitter=$(curl -s "https://www.$site_twitter/$username" $user_agent | grep -o 'page doesn’t exist'; echo $?)
+	check_twitter=$(curl -s "https://$site_twitter/$username" $user_agent | grep -o 'not found'; echo $?)
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Twitter: \e[0m"
 
 	if [[ $check_twitter == *'1'* ]]; then
-	echo -e "\e[1;92m Encontrado!\e[0m https://www.$site_twitter/$username"
-	echo -e "https://www.$site_twitter/$username" >> $projeto/$username.txt
+	echo -e "\e[1;92m Encontrado!\e[0m https://$site_twitter/$username"
+	echo -e "https://$site_twitter/$username" >> $projeto/$username.txt
 	elif [[ $check_twitter == *'0'* ]]; then
 	echo -e "\e[1;93mNão Encontrado!\e[0m"
 	fi
@@ -313,7 +339,7 @@ do
 	fi
 
 
-	## SoundCloud
+	## SOUNDCLOUD
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] SoundCloud: \e[0m"
 	check1=$(curl -s "https://$site_soundcloud/$username" $user_agent | grep -o 'users:'; echo $?)
@@ -339,7 +365,7 @@ do
 	echo -e "https://$site_medium/@$username" >> $projeto/$username.txt
 	fi
 
-	## About.me
+	## ABOUT.ME
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] About.me: \e[0m"
 	check1=$(curl -s "https://$site_about/$username" $user_agent | grep -o 'user_name'; echo $?)
@@ -353,7 +379,7 @@ do
 	fi
 
 
-	## SlideShare
+	## SLIDESHARE
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] SlideShare: \e[0m"
 	check1=$(curl -s "https://$site_slideshare/$username" $user_agent | grep -o 'fb:app_id'; echo $?)
@@ -366,7 +392,7 @@ do
 	echo -e "https://$site_slideshare/$username" >> $projeto/$username.txt
 	fi
 
-	## Spotify
+	## SPOTIFY
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Spotify: \e[0m"
 	check1=$(curl -s "https://$site_spotify/user/$username" $user_agent | grep -o 'description' ; echo $?)
@@ -379,7 +405,7 @@ do
 	echo -e "https://$site_spotify/user/$username" >> $projeto/$username.txt
 	fi
 
-	## Scribd
+	## SCRIBD
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Scribd: \e[0m"
 	check1=$(curl -s "https://www.$site_scribd/$username" $user_agent | grep -o 'Page not found' ; echo $?)
@@ -392,7 +418,7 @@ do
 	echo -e "https://www.$site_scribd/$username" >> $projeto/$username.txt
 	fi
 
-	## Pastebin
+	## PASTEBIN
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Pastebin: \e[0m"
 	check1=$(curl -s "https://$site_pastebin/$username" $user_agent | grep -o 'Not Found' ; echo $?)
@@ -405,7 +431,7 @@ do
 	echo -e "https://$site_pastebin/$username" >> $projeto/$username.txt
 	fi
 
-	## Foursquare
+	## FOURSQUARE
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Foursquare: \e[0m"
 	check1=$(curl -s "https://$site_foursquare/$username" $user_agent | grep -o 'APP_ID:'; echo $?)
@@ -417,7 +443,7 @@ do
 	echo -e "https://$site_foursquare/$username" >> $projeto/$username.txt
 	fi
 
-	## Roblox
+	## ROBLOX
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Roblox: \e[0m"
 	check1=$(curl -s "https://www.$site_roblox$username" $user_agent | grep -o "code=404"; echo $?)
@@ -430,7 +456,7 @@ do
 	echo -e "https://www.$site_roblox$username" >> $projeto/$username.txt
 	fi
 
-	# Ebay
+	# EBAY
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Ebay: \e[0m"
 	check1=$(curl -s "https://www.$site_ebay/usr/$username"  | grep -o "username"; echo $?)
@@ -442,7 +468,7 @@ do
 	echo -e "https://www.$site_ebay/usr/$username" >> $projeto/$username.txt
 	fi
 
-	## Gravatar
+	## GRAVATAR
 
 	echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Gravatar: \e[0m"
         check1=$(curl -s "https://$site_gravatar1$username" | grep -o "g-profile__profile-image"; echo $?)
@@ -453,18 +479,6 @@ do
 
         echo -e "\e[1;92mEncontrado!\e[0m https://$site_gravatar1$username"
         echo -e "https://$site_gravatar1$username" >> $projeto/$username.txt
-        fi
-
-        # Ebay
-
-        echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Ebay: \e[0m"
-        check1=$(curl -s "https://www.$site_ebay/usr/$username"  | grep -o "username"; echo $?)
-        if [[ $check1 == *'1'* ]] ; then 
-        echo -e "\e[1;93mNão Encontrado!\e[0m"
-        elif [[ $check1 == *'0'* ]]; then 
-
-        echo -e "\e[1;92m Encontrado!\e[0m https://www.$site_ebay/usr/$username"
-        echo -e "https://www.$site_ebay/usr/$username" >> $projeto/$username.txt
         fi
 
 	partial
@@ -610,12 +624,15 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
 
 	echo "" >> $projeto/$username.txt
 	echo "##### ESCAVADOR ######" >> $projeto/relatorio_$projeto.txt
-	cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
+	if [ -e "$projeto/escavador.txt" ] ; then
+		cat $projeto/escavador.txt >> $projeto/relatorio_$projeto.txt
+	fi
 	echo "" >> $projeto/$username.txt
 
 	echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
-
-	cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
+        if [ -e "$projeto/escavador.txt" ] ; then
+		cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
+	fi
 	echo "" >> $projeto/relatorio_$projeto.txt
 	echo "##################################" >> $projeto/relatorio_$projeto.txt
 
