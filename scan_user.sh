@@ -630,7 +630,7 @@ if [[ -z "$res1" ]] && [[ -z "$res3" ]];
 	echo "" >> $projeto/$username.txt
 
 	echo "##### JUSBRASIL ######" >> $projeto/relatorio_$projeto.txt
-        if [ -e "$projeto/escavador.txt" ] ; then
+        if [ -e "$projeto/jusbrasil.txt" ] ; then
 		cat $projeto/jusbrasil.txt >> $projeto/relatorio_$projeto.txt
 	fi
 	echo "" >> $projeto/relatorio_$projeto.txt
