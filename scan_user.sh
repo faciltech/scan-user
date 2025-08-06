@@ -21,7 +21,7 @@ linguagem="-H 'Accept-Language: en'"
 bd="banco.txt"
 
 ##### VARIAVEIS DOS SITES USADOS
-site_mercadolivre="loja.mercadolivre.com.br"
+site_mercadolivre="mercadolivre.com.br/loja"
 site_tiktok="tiktok.com"
 site_facebook="facebook.com"
 site_twitter="nitter.net/"
@@ -44,7 +44,7 @@ site_pastebin="pastebin.com"
 site_foursquare="foursquare.com"
 site_roblox="roblox.com/users/profile?username="
 site_ebay="ebay.com/usr"
-site_instagram="https://www.pixwox.com/profile"
+site_instagram="https://www.pixnoy.com/profile"
 site_gravatar="gravatar.com/avatar"
 site_gravatar1="gravatar.com/"
 site_escavador="escavador.com/busca?qo=t&q="
@@ -213,12 +213,13 @@ do
 	loja=$(echo $name | sed 's/ /-/g')
         check_ml=$(curl -s "https://$site_mercadolivre/$loja" $user_agent | grep -o 'Insira a sua busca'; echo $?)
         echo -ne "\e[1;77m[\e[0m\e[1;92m✔\e[0m\e[1;77m] Mercado Livre: \e[0m"
-	echo -e "https://www.$site_mercadolivre/$loja" >> $projeto/$username.txt
-        if [[ $check_ml == *'1'* ]]; then
-        echo -e "\e[1;92m Encontrado!\e[0m https://loja.mercadolivre.com.br/$loja"
-        elif [[ $check_ml == *'0'* ]]; then
+        echo -e "https://www.$site_mercadolivre/$loja" >> $projeto/$username.txt
+        if [[ $check_ml == *'0'* ]]; then
+        echo -e "\e[1;92m Encontrado!\e[0m https://$site_mercadolivre/$loja"
+        elif [[ $check_ml == *'1'* ]]; then
         echo -e "\e[1;93mNão Encontrado!\e[0m"
         fi
+
 
 
 	## TWITTER 
