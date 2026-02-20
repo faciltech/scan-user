@@ -16,7 +16,6 @@ Este projeto continuará sendo atualizado assim que as adaptações necessárias
 
 ---
 
-Projeto hospedado no :contentReference[oaicite:0]{index=0}.
 <p align="center">
   <img src="https://github.com/faciltech/scan-user/assets/3409713/d5c035b9-f723-426a-856b-a472bbfe737d">
 </p>
