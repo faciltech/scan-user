@@ -1,6 +1,22 @@
 <p align="center">
   <img src="https://github.com/faciltech/scan-user/assets/3409713/ddbe101b-a4f5-448d-833b-769679245252" width="300">
 </p>
+⚠️ Aviso de Manutenção
+
+Esta ferramenta encontra-se temporariamente **em manutenção**, devido a modificações recentes nas páginas utilizadas para coleta de dados públicos, o que impactou diretamente seu funcionamento.
+
+Entretanto, para os leitores do livro **Shell Script para OSINT**, o conteúdo apresentado continua válido. Tanto o **código do projeto** quanto a **metodologia empregada** permanecem corretos e úteis para fins de estudo, aprendizado e adaptação a novas fontes de dados.
+
+Enquanto esta ferramenta não é atualizada, a ferramenta **Scan User 2** encontra-se disponível e pode ser utilizada normalmente.
+
+➡️ **Download — Scan User 2:**  
+https://github.com/faciltech/scan_user
+
+Este projeto continuará sendo atualizado assim que as adaptações necessárias forem concluídas.
+
+---
+
+Projeto hospedado no :contentReference[oaicite:0]{index=0}.
 <p align="center">
   <img src="https://github.com/faciltech/scan-user/assets/3409713/d5c035b9-f723-426a-856b-a472bbfe737d">
 </p>
